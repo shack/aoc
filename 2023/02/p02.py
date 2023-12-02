@@ -1,3 +1,4 @@
+import re
 from functools import reduce
 
 def p1():
@@ -9,38 +10,17 @@ def p1():
     }
     sum = 0
     for i, l in enumerate(f):
-        possible = True
-        l = l.strip()
-        _, rest = l.split(':')
-        reveal = rest.split(';')
-        for s in reveal:
-            cubes = s.split(',')
-            for p in cubes:
-                n, col = p.strip().split(' ')
-                possible &= int(n) <= possibles[col]
-        if possible:
+        if all(int(n) <= possibles[col] for n, col in re.findall(r'(\d+) (\w+)', l)):
             sum += i + 1
     print(sum)
-
-
 
 def p2():
     f = open('input.txt', 'r')
     sum = 0
     for l in f:
-        maxs = {
-            'red': 0,
-            'green': 0,
-            'blue': 0,
-        }
-        l = l.strip()
-        _, rest = l.split(':')
-        reveal = rest.split(';')
-        for s in reveal:
-            cubes = s.strip().split(',')
-            for p in cubes:
-                n, col = p.strip().split(' ')
-                maxs[col] = max(maxs[col], int(n))
+        maxs = { }
+        for n, col in re.findall(r'(\d+) (\w+)', l):
+            maxs[col] = max(maxs.get(col, 0), int(n))
         sum += reduce(lambda x, y: x * y, maxs.values())
     print(sum)
 
