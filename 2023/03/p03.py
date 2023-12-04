@@ -37,7 +37,6 @@ def p2():
         for m in r.finditer(l):
             s, e = m.span()
             n = int(m.group())
-
             for x in range(s - 1, e + 1):
                 for y in range(i - 1, i + 2):
                     if vx(x) and vy(y) and p[y][x] == '*':
