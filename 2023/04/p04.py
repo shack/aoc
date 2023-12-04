@@ -9,8 +9,8 @@ def p1():
         _, lr = l.split(':')
         w, h = lr.split('|')
         res = 1
-        w = set(int(x) for x in w.strip().split())
-        h = set(int(x) for x in h.strip().split())
+        w = set(int(x) for x in w.split())
+        h = set(int(x) for x in h.split())
         e = len(w & h)
         total += pow(2, e - 1) if e > 0 else 0
     print(total)
@@ -21,8 +21,8 @@ def p2():
         l = l.strip()
         _, lr = l.split(':')
         w, h = lr.split('|')
-        w = set(int(x) for x in w.strip().split())
-        h = set(int(x) for x in h.strip().split())
+        w = set(int(x) for x in w.split())
+        h = set(int(x) for x in h.split())
         wins[i] = len(w & h)
     nc = { i: 1 for i in range(len(wins)) }
     for i in range(len(wins)):
