@@ -49,8 +49,7 @@ def p2():
                 if n[2] == 'Z':
                     return cnt
 
-    start = [ x for x in dict.keys(g) if x[2] == 'A' ]
-    n = 'AAA'
+    start = [ x for x in g if x[2] == 'A' ]
     cnts = []
     for n in start:
         cnt = walk(n)
