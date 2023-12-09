@@ -14,11 +14,7 @@ def ext(ns):
     while not all(x == 0 for x in ns):
         ns = list(diffs(ns))
         last.append(ns[-1])
-    last.reverse()
-    x = last[0]
-    for y in last[1:]:
-        x += y
-    return x
+    return sum(reversed(last))
 
 def extl(ns):
     first = [ns[0]]
@@ -38,7 +34,6 @@ def p1():
             ns = [int(x) for x in l.split()]
             res += ext(ns)
         print(res)
-
 
 def p2():
     with open(sys.argv[1], 'r') as f:
