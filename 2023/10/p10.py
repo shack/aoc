@@ -18,8 +18,6 @@ def next(m, x, y, px, py):
     else:
         assert False
 
-visit = {}
-
 def p1(input):
     for y, l in enumerate(input):
         if (x := l.find('S')) != -1:
@@ -35,8 +33,6 @@ def p1(input):
         y = y + 1
     cnt = 0
     while (x, y) != (sx, sy):
-        if not y in visit:
-            visit[y] = set()
         assert not x in visit[y]
         visit[y].add(x)
         nx, ny = next(input, x, y, px, py)
@@ -48,14 +44,18 @@ def p1(input):
 
 def p2(input):
     inside = 0
-    for y in sorted(visit.keys()):
-        l = ''.join(input[y][x] if x in visit[y] else ' ' for x in range(len(input[y])))
-        io = [ m.span() for m in re.finditer('(?:F-*J)|(?:L-*7)|(?:\|)', l) ]
+    for v, m in zip(visit, input):
+        l = ''.join(m[x] if x in v else ' ' for x in range(len(m)))
+        io = [ m.span() for m in re.finditer('(F-*J)|(L-*7)|(\|)', l) ]
+        if len(io) % 2 != 0:
+            print(m)
+            # print(io)
         b = [ (r0, l1) for ((_, r0), (l1, _)) in zip(io[::2], io[1::2]) ]
-        inside += sum(len(set(range(l, r)) - visit[y]) for l, r in b)
+        inside += sum(len(set(range(l, r)) - v) for l, r in b)
     print(inside)
 
 input = [ l.strip() for l in open(0) ]
+visit = [ set() for _ in input ]
 
 p1(input)
 p2(input)
