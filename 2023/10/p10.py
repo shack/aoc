@@ -51,7 +51,7 @@ def p2(input):
     for y in sorted(visit.keys()):
         l = ''.join(input[y][x] if x in visit[y] else ' ' for x in range(len(input[y])))
         io = [ m.span() for m in re.finditer('(?:F-*J)|(?:L-*7)|(?:\|)', l) ]
-        b = [ (r0, l1) for ((l0, r0), (l1, r1)) in zip(io[::2], io[1::2]) ]
+        b = [ (r0, l1) for ((_, r0), (l1, _)) in zip(io[::2], io[1::2]) ]
         inside += sum(len(set(range(l, r)) - visit[y]) for l, r in b)
     print(inside)
 
@@ -59,5 +59,3 @@ input = [ l.strip() for l in open(0) ]
 
 p1(input)
 p2(input)
-
-
