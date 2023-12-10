@@ -19,18 +19,12 @@ def cmp_hands_lex(h1, h2):
 
 def type(hand):
     c = sorted(Counter(hand).values(), reverse=True)
-    if c[0] == 5:
-        return 6
-    elif c[0] == 4:
-        return 5
-    elif c[0] == 3:
+    if c[0] == 3:
         return 4 if c[1] == 2 else 3
     elif c[0] == 2:
         return 2 if c[1] == 2 else 1
-    elif c[0] == 1:
-        return 0
     else:
-        assert False
+        return c[0] + 1
 
 def cmp_hands(h1, h2):
     t1 = type(h1)
