@@ -18,19 +18,42 @@ def next(m, x, y, px, py):
     else:
         assert False
 
+sx, sy = 0, 0
+
 def p1(input):
     for y, l in enumerate(input):
         if (x := l.find('S')) != -1:
             break
-    visit[y] = set([x])
+    visit[y].add(x)
     sx, sy = x, y
-    px, py = x, y
-    r = input[y][x+1]
-    d = input[y+1][x]
-    if '-7J'.find(r) != -1:
+    px, py = sx, sy
+    n = input[y-1][x] if y > 0 else '.'
+    e = input[y][x+1] if x < len(input[y]) - 1 else '.'
+    s = input[y+1][x] if y < len(input) - 1 else '.'
+    w = input[y][x-1] if x > 0 else '.'
+    na = n in '|F7'
+    ea = e in '-J7'
+    sa = s in '|JL'
+    wa = w in '-LF'
+    if na and ea:
         x = x + 1
-    elif '|LJ'.find(d) != -1:
+        S = 'L'
+    elif na and sa:
         y = y + 1
+        S = '|'
+    elif na and wa:
+        x = x - 1
+        S = 'J'
+    elif ea and sa:
+        y = y + 1
+        S = 'F'
+    elif ea and wa:
+        x = x + 1
+        S = '-'
+    elif sa and wa:
+        y = y + 1
+        S = '7'
+    input[sy] = input[sy].replace('S', S)
     cnt = 0
     while (x, y) != (sx, sy):
         assert not x in visit[y]
@@ -47,9 +70,6 @@ def p2(input):
     for v, m in zip(visit, input):
         l = ''.join(m[x] if x in v else ' ' for x in range(len(m)))
         io = [ m.span() for m in re.finditer('(F-*J)|(L-*7)|(\|)', l) ]
-        if len(io) % 2 != 0:
-            print(m)
-            # print(io)
         b = [ (r0, l1) for ((_, r0), (l1, _)) in zip(io[::2], io[1::2]) ]
         inside += sum(len(set(range(l, r)) - v) for l, r in b)
     print(inside)
