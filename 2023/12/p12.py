@@ -38,7 +38,7 @@ def combs(a, b):
                 return cached_work(a[1:], [b[0] - 1] + b[1:], True)
         elif a[0] == '?':
             return cached_work('#' + a[1:], b, last_was_hash) \
-                 + cached_work('.' + a[1:], b,  last_was_hash)
+                 + cached_work('.' + a[1:], b, last_was_hash)
 
     return cached_work(a, b, False)
 
