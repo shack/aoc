@@ -25,11 +25,9 @@ def p2(input):
             if not b in boxes:
                 boxes[b] = dict()
             boxes[b][l] = int(i)
-    res = 0
-    for b, ls in boxes.items():
-        for i, (l, f) in enumerate(ls.items()):
-            res += (1 + b) * (i + 1) * f
-    print(res)
+    print(sum((1 + b) * (i + 1) * f \
+              for b, ls in boxes.items()
+              for i, (l, f) in enumerate(ls.items())))
 
 input = open(0).readlines()[0].split(',')
 
