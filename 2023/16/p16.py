@@ -38,8 +38,7 @@ def simulate(input, b):
             if b and b not in seen:
                 q.append(b)
                 seen.add(b)
-    seen = { (x, y) for x, y, _, _ in seen }
-    return len(seen)
+    return len({ (x, y) for x, y, _, _ in seen })
 
 def p1(input):
     print(simulate(input, (0, 0, 1, 0)))
