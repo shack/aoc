@@ -2,7 +2,7 @@ from collections import deque
 
 def new_nn_p1(dir, new_dir, n):
     nn = n + 1 if dir == new_dir else 1
-    return (nn, nn >= 4)
+    return (nn, nn > 3)
 
 def new_nn_p2(dir, new_dir, n):
     if dir == new_dir:
