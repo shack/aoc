@@ -1,17 +1,13 @@
 from heapq import heappush, heappop
 
 def search(map, new_nn):
-    L = [ [ 0, 1 ], [ -1, 0 ] ]
-    R = [ [ 0, -1 ], [ 1, 0 ] ]
-    I = [ [ 1, 0 ], [ 0, 1 ] ]
-    dirs = [ L, R, I ]
     q = [ (0, 0, 0, 1, 0, 0) ]
     seen = {}
     while q:
         d, x, y, dx, dy, n = heappop(q)
-        for M in dirs:
-            ndx = dx * M[0][0] + dy * M[0][1]
-            ndy = dx * M[1][0] + dy * M[1][1]
+        for ndx, ndy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+            if (ndx, ndy) == (-dx, -dy):
+                continue
             nx = x + ndx
             ny = y + ndy
             if not (0 <= nx < X) or not (0 <= ny < Y):
