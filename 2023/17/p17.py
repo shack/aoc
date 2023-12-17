@@ -12,16 +12,17 @@ def new_nn_p2(dir, new_dir, n):
         return (1, n < 4)
 
 def search(map, new_nn):
-    R270 = [ [ 0, 1 ], [ -1, 0 ] ]
-    R90 = [ [ 0, -1 ], [ 1, 0 ] ]
+    L = [ [ 0, 1 ], [ -1, 0 ] ]
+    R = [ [ 0, -1 ], [ 1, 0 ] ]
     I = [ [ 1, 0 ], [ 0, 1 ] ]
+    dirs = [ L, R, I ]
     q = deque([ (0, 0, 1, 0, 0, 0) ])
     seen = {}
     N = len(map)
     assert N == len(map[0])
     while len(q) > 0:
         x, y, dx, dy, n, d = q.popleft()
-        for M in [ R90, R270, I ]:
+        for M in dirs:
             ndx = dx * M[0][0] + dy * M[0][1]
             ndy = dx * M[1][0] + dy * M[1][1]
             nx = x + ndx
