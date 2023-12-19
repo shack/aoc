@@ -1,9 +1,6 @@
-import sys
 import re
 from operator import mul
-from functools import reduce, cmp_to_key
-from itertools import combinations, permutations, product
-from collections import Counter
+from functools import reduce
 
 wfs, pts = open(0).read().split('\n\n')
 rules = {}
@@ -15,11 +12,6 @@ for wf in wfs.split('\n'):
         rs += [ (r[0], r[1], int(r[2]), r[4]) ]
     final = rest.split(',')[-1]
     rules[name] = (rs, final)
-
-cmp = {
-    '<': lambda a, b : a < b,
-    '>': lambda a, b : a > b,
-}
 
 def search(name, bounds):
     if name == 'A':
