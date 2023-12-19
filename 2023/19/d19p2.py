@@ -8,8 +8,8 @@ for wf in wfs.split('\n'):
     wf = wf[:-1]
     name, rest = wf.split('{')
     rs = []
-    for r in re.findall('(\w+)(.)(\d+)(:(\w+))?', rest):
-        rs += [ (r[0], r[1], int(r[2]), r[4]) ]
+    for r in re.findall('(\w+)(.)(\d+):(\w+)', rest):
+        rs += [ (r[0], r[1], int(r[2]), r[3]) ]
     final = rest.split(',')[-1]
     rules[name] = (rs, final)
 
