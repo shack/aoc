@@ -30,6 +30,7 @@ def search(name, bounds):
     rs, final = rules[name]
     for n, c, v, d in rs:
         l, u = bounds[n]
+        assert l <= v < u
         if c == '<':
             t, f = (l, v), (v, u)
         else:
