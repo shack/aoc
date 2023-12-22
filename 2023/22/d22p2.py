@@ -12,6 +12,7 @@ bricks = sorted(bricks, key=lambda b : min(b[0][2], b[1][2]))
 
 M = {}
 supported_by = { k: set() for k in range(len(bricks)) }
+supports = deepcopy(supported_by)
 for i, ((x1, y1, z1), (x2, y2, z2)) in enumerate(bricks):
     x1, x2 = sorted([x1, x2])
     y1, y2 = sorted([y1, y2])
@@ -23,6 +24,7 @@ for i, ((x1, y1, z1), (x2, y2, z2)) in enumerate(bricks):
         below = filter(lambda b : b[1] == max_z, below)
         for b, z in below:
             supported_by[i] |= { b }
+            supports[b] |= { i }
     else:
         max_z = 0
     for c in B:
@@ -34,7 +36,7 @@ for i in range(len(bricks)):
     q = deque([i])
     while q:
         r = q.popleft()
-        for j in range(i + 1, len(bricks)):
+        for j in supports[r]:
             if r in s[j]:
                 if len(s[j]) == 1:
                     q.append(j)
