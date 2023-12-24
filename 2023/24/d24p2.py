@@ -1,16 +1,11 @@
 import re
 from z3 import *
 
-input = [ tuple(map(int, re.findall(r'-?\d+', l))) for l in open(0) ]
-
-qx = Real('qx')
-qy = Real('qy')
-qz = Real('qz')
-px = Real('px')
-py = Real('py')
-pz = Real('pz')
+qx, qy, qz = Reals('qx qy qz')
+px, py, pz = Reals('px py pz')
 solver = Solver()
-for i, (x, y, z, dx, dy, dz) in enumerate(input):
+for i, l in enumerate(open(0)):
+     x, y, z, dx, dy, dz = map(int, re.findall(r'-?\d+', l))
      t = Real(f't{i}')
      solver.add(x + t * dx == px + t * qx)
      solver.add(y + t * dy == py + t * qy)
