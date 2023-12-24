@@ -10,10 +10,8 @@ px = Real('px')
 py = Real('py')
 pz = Real('pz')
 solver = Solver()
-ts = []
 for i, (x, y, z, dx, dy, dz) in enumerate(input):
      t = Real(f't{i}')
-     ts.append(t)
      solver.add(x + t * dx == px + t * qx)
      solver.add(y + t * dy == py + t * qy)
      solver.add(z + t * dz == pz + t * qz)
