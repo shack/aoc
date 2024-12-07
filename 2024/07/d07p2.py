@@ -11,10 +11,9 @@ for l in input:
     nums = list(map(int, right.split(' ')))
     res = int(res)
 
-    ok = False
     fst = nums[0]
     rest = nums[1:]
-    for ops in product(*(['+*|'] * (len(rest)))):
+    for ops in product('+*|', repeat=len(rest)):
         r = fst
         for n, op in zip(rest, ops):
             match op:
@@ -22,8 +21,6 @@ for l in input:
                 case '*': r *= n
                 case '|': r = int(str(r) + str(n))
         if r == res:
-            ok = True
+            ans += res
             break
-    if ok:
-        ans += res
 print(ans)
