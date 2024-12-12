@@ -37,33 +37,8 @@ def all_sides(c, r):
         res += sides(r)
         r = set((Y-1-y, x) for x, y in r)
     return res
-# def sides(r):
-#     outside = set()
-#     for x, y in r:
-#         for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-#             nx, ny = x + dx, y + dy
-#             if not (nx, ny) in r:
-#                 outside.add((x, y))
-#     uf = {}
-#     def find(p):
-#         if not p in uf:
-#             uf[p] = p
-#         elif uf[p] != p:
-#             uf[p] = find(uf[p])
-#         return uf[p]
-#     for x, y in outside:
-#         for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-#             nx, ny = x + dx, y + dy
-#             if (nx, ny) in outside:
-#                 uf[(x, y, dx, dy)] = find((nx, ny, dx, dy))
-#     r = defaultdict(int)
-#     for p in uf:
-#         print(p, find(p))
-#         r[find(p)] += 1
-#     return len(r)
 
 all_seen = set()
-
 res = 0
 for y in range(Y):
     for x in range(X):
@@ -71,6 +46,5 @@ for y in range(Y):
         if not (x, y) in all_seen:
             r = expand_region(c, x, y)
             all_seen |= r
-            print(c, len(r), all_sides(c, r))
             res += len(r) * all_sides(c, r)
 print(res)
