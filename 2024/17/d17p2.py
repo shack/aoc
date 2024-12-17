@@ -63,6 +63,5 @@ for i, o in zip(prg, out):
     s.add(o == i)
 s.minimize(start)
 res = s.check()
-if res == sat:
-    val = s.model()[start]
-    print(val)
+assert res == sat
+print(s.model()[start])
