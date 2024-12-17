@@ -12,8 +12,14 @@ def symexec(prg, s, width=32):
     max_loop = len(prg)
     start = BitVec(f'ra_start', width)
     regs = [start, BitVecVal(0, width), BitVecVal(0, width)]
+    vers = [1, 0, 0]
 
-    for lp in range(max_loop):
+    def upd(reg, val):
+        regs[reg] = BitVec(f'r{reg}_v{vers[reg]}', width)
+        vers[reg] += 1
+        s.add(regs[reg] == val)
+
+    for _ in range(max_loop):
         ip = 0
         while ip < len(prg):
             i = prg[ip]
@@ -23,49 +29,32 @@ def symexec(prg, s, width=32):
                 combo = BitVecVal(lit, width)
             else:
                 combo = regs[lit-4]
-            new_regs = [ BitVec(f'r{r}_lp{lp}_ip{ip}', width) for r in range(3) ]
             match i:
                 case 0:
-                    s.add(new_regs[0] == LShR(regs[0], combo))
-                    s.add(new_regs[1] == regs[1])
-                    s.add(new_regs[2] == regs[2])
+                    upd(0, LShR(regs[0], combo))
                     ip += 2
                 case 1:
-                    s.add(new_regs[1] == regs[1] ^ lit)
-                    s.add(new_regs[0] == regs[0])
-                    s.add(new_regs[2] == regs[2])
+                    upd(1, regs[1] ^ lit)
                     ip += 2
                 case 2:
-                    s.add(new_regs[1] == (combo & 7))
-                    s.add(new_regs[0] == regs[0])
-                    s.add(new_regs[2] == regs[2])
+                    upd(1, combo & 7)
                     ip += 2
                 case 3:
                     break
                 case 4:
-                    s.add(new_regs[1] == regs[1] ^ regs[2])
-                    s.add(new_regs[0] == regs[0])
-                    s.add(new_regs[2] == regs[2])
+                    upd(1, regs[1] ^ regs[2])
                     ip += 2
                 case 5:
-                    s.add(new_regs[0] == regs[0])
-                    s.add(new_regs[1] == regs[1])
-                    s.add(new_regs[2] == regs[2])
-                    o = BitVec(f'o_lp{lp}_ip{ip}', width)
+                    o = BitVec(f'o{len(out)}', width)
                     out.append(o)
                     s.add(o == combo & 7)
                     ip += 2
                 case 6:
-                    s.add(new_regs[1] == LShR(regs[0], combo))
-                    s.add(new_regs[0] == regs[0])
-                    s.add(new_regs[2] == regs[2])
+                    upd(1, LShR(regs[0], combo))
                     ip += 2
                 case 7:
-                    s.add(new_regs[2] == LShR(regs[0], combo))
-                    s.add(new_regs[1] == regs[1])
-                    s.add(new_regs[0] == regs[0])
+                    upd(2, LShR(regs[0], combo))
                     ip += 2
-            regs = new_regs
     return (start, out)
 
 s = Optimize()
