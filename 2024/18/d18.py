@@ -56,13 +56,14 @@ def astar(array, start, goal, neighbors=[(0, 1), (1, 0), (-1, 0), (0, -1)], heur
 
 # pt1
 w = copy.deepcopy(m)
-fall(w, 1024)
+for (x, y), _ in zip(input, range(1024)):
+    w[y][x] = '#'
 print(len(astar(w, (0, 0), (N - 1, N - 1))))
 
 # pt2
 for i in range(len(input)):
-    w = copy.deepcopy(m)
-    fall(w, i)
-    if not astar(w, (0, 0), (N - 1, N - 1)):
+    if not astar(m, (0, 0), (N - 1, N - 1)):
         print(input[i - 1])
         break
+    x, y = input[i]
+    m[y][x] = '#'
