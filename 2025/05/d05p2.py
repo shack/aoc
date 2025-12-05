@@ -16,18 +16,16 @@ for line in input:
     elif not line:
         break
 
-def merge(intv):
-    intv = sorted(intv, key=lambda x: x[0])
-    res = [ intv[0] ]
-    for s, e in intv[1:]:
-        ls, le = res[-1]
-        if s <= le:
-            res[-1] = (ls, max(le, e))
-        else:
-            res.append((s, e))
-    return res
+intv = sorted(intv, key=lambda x: x[0])
+union = [ intv[0] ]
+for s, e in intv[1:]:
+    ls, le = union[-1]
+    if s <= le:
+        union[-1] = (ls, max(le, e))
+    else:
+        union.append((s, e))
 
 res = 0
-for a, b in merge(intv):
+for a, b in union:
     res += b - a + 1
 print(res)
