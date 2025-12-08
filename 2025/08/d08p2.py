@@ -18,9 +18,9 @@ uf = { p: p for p in input }
 def find(p):
     return p if p == uf[p] else find(uf[p])
 
-closest = sorted([ (a, b, dist(a, b)) for a, b in combinations(input, 2) ], key=lambda x: x[2])
+closest = sorted(combinations(input, 2), key=lambda x: dist(x[0], x[1]))
 
-for i, (a, b, d) in enumerate(closest):
+for a, b in closest:
     uf[find(b)] = find(a)
     curr = find(b)
     for p in uf:
