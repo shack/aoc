@@ -1,6 +1,6 @@
 import re
 import math
-from functools import reduce, cmp_to_key
+from functools import reduce, cmp_to_key, cache
 from itertools import combinations, permutations, product
 from collections import Counter, deque, defaultdict
 
@@ -13,18 +13,11 @@ for l in input:
     for d in r.split():
         g[n.strip()].add(d.strip())
 
-res = {}
+@cache
 def search(v):
     if v == 'out':
         return 1
-    r = 0
-    for n in g[v]:
-        if n in res:
-            r += res[n]
-        else:
-            r += search(n)
-    res[v] = r
-    return r
+    return sum(search(n) for n in g[v])
 
 print(search('you'))
 
