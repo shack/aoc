@@ -37,3 +37,31 @@ def get_path(src, start, end):
 
 def rotate_ccw(dx, dy):
     return -dy, dx
+
+def find_start_interval(lt, start=8):
+    l, u = 0, start
+    while not lt(u):
+        l, u = u, u * 2
+    return l, u
+
+def binary_search(lt, l, r):
+    if l == r:
+        return l
+    while l != r:
+        m = l + (r - l + 1) // 2
+        if lt(m):
+            r = m - 1
+        else:
+            l = m
+    return l
+
+def get_blocks(input):
+    blocks = []
+    curr = []
+    for l in input:
+        if l:
+            curr += [ l ]
+        else:
+            blocks += [ curr ]
+            curr = []
+    return blocks + [ curr ]
