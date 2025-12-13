@@ -32,7 +32,6 @@ def area(p):
 res = 0
 for cfg in configs:
     ps = [ (i, c) for i, c in enumerate(cfg[2:]) if c > 0 ]
-    board = [ ['.'] * cfg[0] for _ in range(cfg[1]) ]
     lower = sum(area(presents[i]) * c for i, c in ps)
     too_much = lower >= cfg[0] * cfg[1]
     fits_trivially = sum(c for _, c in ps) <= (cfg[0] // 3) * (cfg[1] // 3)
